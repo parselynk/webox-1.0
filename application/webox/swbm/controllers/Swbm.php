@@ -103,11 +103,15 @@ class Swbm extends CI_Controller {
             $this->load->view('/user/login');
             $this->load->view('/templates/user/footer');
         } else {
-
-            $post = $this->input->post();
-            $clean_post = $this->security->xss_clean($post);
-            $this->user_model->set_data($clean_post);
-            $userInfo = $this->user_model->check_login($clean_post)->get_response(false, false);
+            try {
+                 $post = $this->input->post();
+                 $clean_post = $this->security->xss_clean($post);
+                 $this->user_model->set_data($clean_post);
+            
+                 $userInfo = $this->user_model->check_login($clean_post)->get_response(false, false);
+            }catch(Exception $ex){
+                show_webox_error($ex, '', 'Webox Error Message', $this->user_model->get_last_query());   
+            }
             if ($userInfo['success'] !== true) {
 
                 $this->session->set_flashdata('flash_message', 'The login was unsucessful');

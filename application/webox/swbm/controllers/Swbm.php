@@ -127,7 +127,8 @@ class Swbm extends CI_Controller {
             }
             // sets user as logged in
             Authorize::set_userdata('logged_in', true);
-            redirect(site_url() . 'swbm/');
+            redirect(site_url() . 'swbm/index');
+            exit;
         }
     }
 
@@ -135,7 +136,6 @@ class Swbm extends CI_Controller {
         $token = base64_decode($this->uri->segment(4));
         $cleanToken = $this->security->xss_clean($token);
         $user_info = $this->user_model->verify_user($cleanToken); //either false or array();           
-
         if (!$user_info) {
             $this->session->set_flashdata('flash_message', 'Token is invalid or expired');
             redirect(site_url() . 'swbm/login');

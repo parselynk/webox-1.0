@@ -181,7 +181,7 @@ class database_model extends CI_Model {
                 $this->_response = $this->select_query($sql, get_called_class(), 'all');
             } else {
                 $this->db->where($field,$parameter);
-                $sql = $this->db->get_compiled_select();
+                $sql = $this->db->get_compiled_select(static::$table_name);
                 $this->_response = $this->select_query($sql, get_called_class(), 'all', [$parameter]);
                 
             }
@@ -372,8 +372,7 @@ class database_model extends CI_Model {
             $this->_response = ['success' => 'false', 'affected_rows' => $affected_rows];
         }
         
-        echo $affected_rows;
-        echo $this->_last_query = $this->db->last_query();
+        $this->_last_query = $this->db->last_query();
         return $this;
     }
 

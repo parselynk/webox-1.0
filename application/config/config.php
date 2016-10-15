@@ -535,6 +535,9 @@ $config['modules_locations'] = array(APPPATH . 'webox/');
 | These variables are set for WX_require_header_helper
 |
 */
+$config['style_path'] = 'vendor/style/';
+$config['js_path']  = 'vendor/js/';
+
 
 $config['css_headers'] = array('style.css');
 $config['js_headers']  = array('core.js');

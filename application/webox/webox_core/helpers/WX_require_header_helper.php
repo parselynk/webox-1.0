@@ -54,17 +54,20 @@ if(!function_exists('require_headers')){
         $ci = &get_instance();
         $css_headers = $ci->config->item('css_headers');
         $js_headers = $ci->config->item('js_headers');
+        $js = base_url().$ci->config->item('style_path');
+        $style = base_url().$ci->config->item('js_path');
+        
         if (!empty($css_headers)){
 
             foreach($css_headers as $item){
                 echo 
-                $headers .= link_tag('css/'.$item)."\n";
+                $headers .= link_tag($style.$item)."\n";
                 
             }
         }
         if (!empty($js_headers)){
             foreach($js_headers as $item){
-                $headers .= '<script type="text/javascript" src="'.base_url().'js/'.$item.'"></script>'."\n";
+                $headers .= '<script type="text/javascript" src="'.$js.$item.'"></script>'."\n";
             }
          } 
 

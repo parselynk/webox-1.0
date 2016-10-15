@@ -27,6 +27,7 @@ class Swbm extends CI_Controller {
         // Helper
         $this->load->helper('url_helper');
         $this->load->helper('webox_core/WX_validate_helper');
+        $this->load->helper('webox_core/WX_require_header_helper');
         $this->load->helper('html');
 
         // Intialize

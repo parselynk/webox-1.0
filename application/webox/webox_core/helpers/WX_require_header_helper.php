@@ -12,31 +12,36 @@ if(!function_exists('insert_header')){
 	 * @param	string $type
 	 * @return	void
 	 */
-    function insert_header($file= null , $type = null)
+    function insert_header($file = null)
     {
         $valid_types = ['css','js'];
-        $str = '';
         $ci = &get_instance();
-        if(isset($type) && in_array($type, $valid_types))
-        $header  = $ci->config->item($type."_headers");
-        $header_name = "header_".$type;
         if(empty($file)){
             return;
         }
  
-        if(is_array($file)){
-            if(!is_array($file) && count($file) <= 0){
-                return;
-            }
-            foreach($file as $item){
-                $header[] = $item;
-            }
-            $ci->config->set_item($header_name,$header);
-        }else{
-            $header[] = $file;
-            $ci->config->set_item($header_name,$header);
+       if(!is_array($file) && count($file) <= 0){
+            return;
         }
+            
+            foreach($file as $item){
+                if (strpos($item, 'js') !== false) {
+                    $header = $ci->config->item("js_headers");
+                    $header_name = "js_headers"; 
+                    $header[] = $item;
+                    $ci->config->set_item($header_name,$header);
+                }
+                if (strpos($item, 'css') !== false) {
+                    $header  = $ci->config->item("css_headers");
+                    $header_name = "css_headers"; 
+                    $header[] = $item;
+                    $ci->config->set_item($header_name,$header);
+                }
+            }
+
+    
     }
+
 }
  
  
@@ -54,20 +59,27 @@ if(!function_exists('require_headers')){
         $ci = &get_instance();
         $css_headers = $ci->config->item('css_headers');
         $js_headers = $ci->config->item('js_headers');
-        $js = base_url().$ci->config->item('style_path');
-        $style = base_url().$ci->config->item('js_path');
+        $style_url = base_url().$ci->config->item('style_path');
+        $js_url = base_url().$ci->config->item('js_path');
+        $style_path = FCPATH.$ci->config->item('style_path');
+        $js_path = FCPATH.$ci->config->item('js_path');
         
         if (!empty($css_headers)){
-
             foreach($css_headers as $item){
-                echo 
-                $headers .= link_tag($style.$item)."\n";
-                
+                if (file_exists($style_path.$item)){
+                    $headers .= link_tag($style_url.$item);
+                }else{
+                    $headers .= "<!-- ERROR 404 :: {$item} does not exist. -->\n";
+                }
             }
         }
         if (!empty($js_headers)){
             foreach($js_headers as $item){
-                $headers .= '<script type="text/javascript" src="'.$js.$item.'"></script>'."\n";
+                if (file_exists($js_path.$item)){
+                    $headers .= '<script type="text/javascript" src="'.$js_url.$item.'"></script>'."\n";
+                } else {
+                    $headers .= "<!-- ERROR 404 :: {$item} does not exist. -->\n";
+                }
             }
          } 
 

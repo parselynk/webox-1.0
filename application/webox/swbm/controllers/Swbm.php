@@ -100,6 +100,7 @@ class Swbm extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() == FALSE) {
+            insert_header(['test1.css','test2.js','template/test4.css','lib/test3.js']);
             $this->load->view('/templates/user/header');
             $this->load->view('/user/login');
             $this->load->view('/templates/user/footer');

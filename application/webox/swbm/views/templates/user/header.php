@@ -12,6 +12,8 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="/public/css/main.css">
+        <?php echo require_headers(); ?>
+
     </head>
     <body>
     <!--[if lt IE 8]>

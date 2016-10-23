@@ -99,3 +99,8 @@ $route['news/(:any)'] = 'news/view_by_id/$1';
 
 $route['swbm'] = 'swbm';
 $route['swbm/'] = 'swbm/index';
+
+$route['administrator'] = 'administrator';
+$route['administrator/'] = 'administrator/index';
+
+$route['administrator/users'] = 'administrator/users';
